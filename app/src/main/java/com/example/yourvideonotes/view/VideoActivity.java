@@ -22,9 +22,7 @@ public class VideoActivity extends AppCompatActivity {
 
     ActivityVideoBinding binding;
 
-    String videoTitle;
-    String videoUrl;
-    String videoExp;
+    String videoTitle,videoUrl,videoExp,date;
     float videoSecond;
 
     @Override
@@ -48,7 +46,7 @@ public class VideoActivity extends AppCompatActivity {
                 @Override
                 public void onReady(@NonNull YouTubePlayer youTubePlayer) {
 
-                    // check youtube link
+                    // check youtube link // muhammet ciftci
                     if(videoUrl.contains("=") && videoUrl.contains("https://www.youtube.com/"))
                     {
                         String[] sep = videoUrl.split("=");
@@ -77,10 +75,12 @@ public class VideoActivity extends AppCompatActivity {
         videoUrl = extras.getString("url");
         videoExp = extras.getString("exp");
         videoTitle = extras.getString("title");
+        date = extras.getString("date");
         videoSecond = extras.getFloat("sec",0f);
 
         binding.explanationVideoactivityText.setText(videoExp);
         binding.titleVideoactivityText.setText(videoTitle);
+        binding.dateVideoactivityText.setText(date);
     }
 
 

@@ -21,10 +21,15 @@ public class VideoInfo {
     @ColumnInfo(name="videotitle")
     public String videoTitle;
 
+    @ColumnInfo(name="date")
+    public String date;
+
     @ColumnInfo(name="videosec")
     public float videoSec;
 
-    public VideoInfo(String videoTitle, String videoLink, String videoExplanation, float videoSec) {
+
+
+    public VideoInfo(String videoTitle, String videoLink, String videoExplanation, float videoSec, String date) {
         this.videoLink = videoLink;
         this.videoExplanation = videoExplanation;
         this.videoSec = videoSec;

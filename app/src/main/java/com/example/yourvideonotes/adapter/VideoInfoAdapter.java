@@ -17,6 +17,7 @@ import com.example.yourvideonotes.databinding.ItemVideoBinding;
 import com.example.yourvideonotes.model.VideoInfo;
 import com.example.yourvideonotes.roomdb.VideoDatabase;
 import com.example.yourvideonotes.roomdb.VideoInfoDao;
+import com.example.yourvideonotes.view.MainActivity;
 import com.example.yourvideonotes.view.VideoActivity;
 
 import java.util.ArrayList;
@@ -41,11 +42,13 @@ public class VideoInfoAdapter extends RecyclerView.Adapter<VideoInfoAdapter.View
         String videoTitle = videoInfoArrayList.get(position).videoTitle;
         String videoUrl = videoInfoArrayList.get(position).videoLink;
         String videoExplanation = videoInfoArrayList.get(position).videoExplanation;
+        String date = MainActivity.getDate(holder.itemView.getContext());
         int videoId = videoInfoArrayList.get(position).id;
         float videoSecond = videoInfoArrayList.get(position).videoSec;
 
         holder.binding.videoExplanationText.setText(videoExplanation);
         holder.binding.videoTitleText.setText(videoTitle);
+        holder.binding.videoDateText.setText(date);
 
 
 
@@ -57,6 +60,7 @@ public class VideoInfoAdapter extends RecyclerView.Adapter<VideoInfoAdapter.View
                 intent.putExtra("url",videoUrl);
                 intent.putExtra("title",videoTitle);
                 intent.putExtra("exp",videoExplanation);
+                intent.putExtra("date",date);
                 intent.putExtra("sec",videoSecond);
                 v.getContext().startActivity(intent);
 
@@ -105,7 +109,7 @@ public class VideoInfoAdapter extends RecyclerView.Adapter<VideoInfoAdapter.View
 
                         if (!dialogSecEdittextFloat.isEmpty() && !dialogLinkEdittextStr.isEmpty() && !dialogSecEdittextFloat.isEmpty() && !dialogTitleEdittextStr.isEmpty())
                         {
-                            VideoInfo info = new VideoInfo(dialogTitleEdittextStr,dialogLinkEdittextStr,dialogExpEdittextStr,Float.parseFloat(dialogSecEdittextFloat));
+                            VideoInfo info = new VideoInfo(dialogTitleEdittextStr,dialogLinkEdittextStr,dialogExpEdittextStr,Float.parseFloat(dialogSecEdittextFloat),date);
                             videoInfoDao.updateVideo(videoId,dialogLinkEdittextStr,dialogTitleEdittextStr,dialogExpEdittextStr,Float.parseFloat(dialogSecEdittextFloat));
                             videoInfoArrayList.set(position,info);
                             notifyDataSetChanged();

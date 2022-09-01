@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.room.Room;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -16,7 +17,9 @@ import com.example.yourvideonotes.model.VideoInfo;
 import com.example.yourvideonotes.roomdb.VideoDatabase;
 import com.example.yourvideonotes.roomdb.VideoInfoDao;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -94,12 +97,13 @@ public class MainActivity extends AppCompatActivity {
                 String videoexpString = dialogBinding.explanationDialogEdittext.getText().toString();
                 String linkStirng = dialogBinding.linkDialogEdittext.getText().toString();
                 String secondString =  dialogBinding.secondDialogEdittext.getText().toString();
+                String date = getDate(getApplicationContext());
                 float secondFloat = 0;
 
                 if (!titleString.isEmpty() && !videoexpString.isEmpty() && !linkStirng.isEmpty() && !secondString.isEmpty())
                 {
                     secondFloat = Float.parseFloat(secondString);
-                    VideoInfo video = new VideoInfo(titleString, linkStirng, videoexpString,secondFloat);
+                    VideoInfo video = new VideoInfo(titleString, linkStirng, videoexpString,secondFloat,date);
                     videoInfoDao.insertAll(video);
                     dialog.dismiss();
                     refreshRecylerView();
@@ -116,6 +120,16 @@ public class MainActivity extends AppCompatActivity {
 
 
         dialog.show();
+    }
+
+    public static String getDate(Context context){
+        Date date = new Date();
+        DateFormat dateFormatTime = android.text.format.DateFormat.getTimeFormat(context);
+        DateFormat dateFormatDate = android.text.format.DateFormat.getDateFormat(context);
+        String dateStr = dateFormatDate.format(date); android.text.format.DateFormat.getTimeFormat(context);
+        String timeStr = dateFormatTime.format(date); android.text.format.DateFormat.getTimeFormat(context);
+        String localDateTimeString=dateStr +" "+ timeStr;
+        return localDateTimeString;
     }
 
 
