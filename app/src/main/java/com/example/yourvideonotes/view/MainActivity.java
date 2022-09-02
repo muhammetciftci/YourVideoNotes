@@ -16,6 +16,7 @@ import com.example.yourvideonotes.databinding.AddDialogBinding;
 import com.example.yourvideonotes.model.VideoInfo;
 import com.example.yourvideonotes.roomdb.VideoDatabase;
 import com.example.yourvideonotes.roomdb.VideoInfoDao;
+import com.example.yourvideonotes.util.Util;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
@@ -96,13 +97,17 @@ public class MainActivity extends AppCompatActivity {
                 String titleString = dialogBinding.titleDialogEdittext.getText().toString();
                 String videoexpString = dialogBinding.explanationDialogEdittext.getText().toString();
                 String linkStirng = dialogBinding.linkDialogEdittext.getText().toString();
-                String secondString =  dialogBinding.secondDialogEdittext.getText().toString();
+                String hour = dialogBinding.hourDialogEdittext.getText().toString();
+                String min = dialogBinding.minuteDialogEdittext.getText().toString();
+                String sec = dialogBinding.secondDialogEdittext.getText().toString();
+
+
                 String date = getDate(getApplicationContext());
                 float secondFloat = 0;
 
-                if (!titleString.isEmpty() && !videoexpString.isEmpty() && !linkStirng.isEmpty() && !secondString.isEmpty())
+                if (!titleString.isEmpty() && !videoexpString.isEmpty() && !linkStirng.isEmpty() && !hour.isEmpty() && !min.isEmpty() && !sec.isEmpty())
                 {
-                    secondFloat = Float.parseFloat(secondString);
+                    secondFloat = Util.videoSecondMaker(Integer.parseInt(hour), Integer.parseInt(min), Integer.parseInt(sec), getApplicationContext());
                     VideoInfo video = new VideoInfo(titleString, linkStirng, videoexpString,secondFloat,date);
                     videoInfoDao.insertAll(video);
                     dialog.dismiss();

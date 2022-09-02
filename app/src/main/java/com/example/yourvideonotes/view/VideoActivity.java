@@ -47,13 +47,20 @@ public class VideoActivity extends AppCompatActivity {
                 public void onReady(@NonNull YouTubePlayer youTubePlayer) {
 
                     // check youtube link // muhammet ciftci
-                    if(videoUrl.contains("=") && videoUrl.contains("https://www.youtube.com/"))
+                    if(videoUrl.contains("=") && videoUrl.contains("youtu.be/"))
                     {
+                        //for desktop link
                         String[] sep = videoUrl.split("=");
                         videoUrl = sep[1];
                         youTubePlayer.loadVideo(videoUrl,videoSecond);
                     }
-                    else{
+                    else if (videoUrl.contains("be/") && videoUrl.contains("https://youtu.be/")){
+                        //for mobile link
+                        String[] sep = videoUrl.split("be/");
+                        videoUrl = sep[1];
+                        youTubePlayer.loadVideo(videoUrl,videoSecond);
+                    }
+                    else {
                         Toast.makeText(VideoActivity.this, "video link not found", Toast.LENGTH_SHORT).show();
                     }
                     

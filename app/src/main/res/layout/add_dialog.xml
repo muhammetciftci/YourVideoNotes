@@ -41,23 +41,94 @@
         android:hint="Explanation" />
 
 
-    <EditText
-        android:id="@+id/second_dialog_edittext"
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_margin="20sp"
+        android:background="@color/black" />
+
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:text="Video start time"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:layout_weight="1"
-        android:ems="10"
-        android:inputType="numberDecimal"
-        android:hint="Video Second" />
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:text="hour:"/>
+
+        <EditText
+            android:id="@+id/hour_dialog_edittext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:ems="10"
+            android:inputType="numberDecimal"
+            android:text="00" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:text="minute:"/>
+
+        <EditText
+            android:id="@+id/minute_dialog_edittext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:ems="10"
+            android:inputType="numberDecimal"
+            android:text="00" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:text="second:"/>
+
+        <EditText
+            android:id="@+id/second_dialog_edittext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:ems="10"
+            android:inputType="numberDecimal"
+            android:text="00" />
+    </LinearLayout>
+
+
+
 
     <ImageButton
         android:id="@+id/add_imageButton"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_weight="1"
+        android:layout_margin="20sp"
+        android:background="@color/purple_500"
+        android:layout_gravity="center"
         android:onClick="addButtonFunction"
         app:srcCompat="@drawable/ic_baseline_add_24" />
+
+
 
 </LinearLayout>
