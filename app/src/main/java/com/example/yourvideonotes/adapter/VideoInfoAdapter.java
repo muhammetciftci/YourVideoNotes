@@ -43,7 +43,7 @@ public class VideoInfoAdapter extends RecyclerView.Adapter<VideoInfoAdapter.View
         String videoTitle = videoInfoArrayList.get(position).videoTitle;
         String videoUrl = videoInfoArrayList.get(position).videoLink;
         String videoExplanation = videoInfoArrayList.get(position).videoExplanation;
-        String date = MainActivity.getDate(holder.itemView.getContext());
+        String date = Util.getDate(holder.itemView.getContext());
         int videoId = videoInfoArrayList.get(position).id;
         float videoSecond = videoInfoArrayList.get(position).videoSec;
 

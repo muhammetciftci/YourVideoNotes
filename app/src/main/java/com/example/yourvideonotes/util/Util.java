@@ -3,6 +3,9 @@ package com.example.yourvideonotes.util;
 import android.content.Context;
 import android.widget.Toast;
 
+import java.text.DateFormat;
+import java.util.Date;
+
 public class Util {
 
 
@@ -95,6 +98,16 @@ public class Util {
             i++;
         }
         return true;
+    }
+
+    public static String getDate(Context context){
+        Date date = new Date();
+        DateFormat dateFormatTime = android.text.format.DateFormat.getTimeFormat(context);
+        DateFormat dateFormatDate = android.text.format.DateFormat.getDateFormat(context);
+        String dateStr = dateFormatDate.format(date); android.text.format.DateFormat.getTimeFormat(context);
+        String timeStr = dateFormatTime.format(date); android.text.format.DateFormat.getTimeFormat(context);
+        String localDateTimeString=dateStr +" "+ timeStr;
+        return localDateTimeString;
     }
 
 }

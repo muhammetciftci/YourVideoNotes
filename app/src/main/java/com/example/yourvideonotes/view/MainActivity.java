@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
                 String titleString = dialogBinding.titleDialogEdittext.getText().toString();
                 String videoexpString = dialogBinding.explanationDialogEdittext.getText().toString();
                 String linkStirng = dialogBinding.linkDialogEdittext.getText().toString();
-                String date = getDate(getApplicationContext());
+                String date = Util.getDate(getApplicationContext());
 
                 String hour = dialogBinding.hourDialogEdittext.getText().toString();
                 String min = dialogBinding.minuteDialogEdittext.getText().toString();
@@ -105,7 +105,9 @@ public class MainActivity extends AppCompatActivity {
                 if (Util.isEmptyStringParams(titleString,videoexpString,linkStirng,hour,min,sec))
                 {
                     if (Util.videoStartTimeEditTextControl(hour,min,sec)){
+
                         secondFloat = Util.toSecondConvert(Integer.parseInt(hour), Integer.parseInt(min), Integer.parseInt(sec), getApplicationContext());
+
                         VideoInfo video = new VideoInfo(titleString, linkStirng, videoexpString,secondFloat,date);
                         videoInfoDao.insertAll(video);
                         dialog.dismiss();
@@ -129,15 +131,7 @@ public class MainActivity extends AppCompatActivity {
         dialog.show();
     }
 
-    public static String getDate(Context context){
-        Date date = new Date();
-        DateFormat dateFormatTime = android.text.format.DateFormat.getTimeFormat(context);
-        DateFormat dateFormatDate = android.text.format.DateFormat.getDateFormat(context);
-        String dateStr = dateFormatDate.format(date); android.text.format.DateFormat.getTimeFormat(context);
-        String timeStr = dateFormatTime.format(date); android.text.format.DateFormat.getTimeFormat(context);
-        String localDateTimeString=dateStr +" "+ timeStr;
-        return localDateTimeString;
-    }
+
 
 
 
