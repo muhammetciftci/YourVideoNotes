@@ -17,6 +17,7 @@ import com.example.yourvideonotes.databinding.ItemVideoBinding;
 import com.example.yourvideonotes.model.VideoInfo;
 import com.example.yourvideonotes.roomdb.VideoDatabase;
 import com.example.yourvideonotes.roomdb.VideoInfoDao;
+import com.example.yourvideonotes.util.Util;
 import com.example.yourvideonotes.view.MainActivity;
 import com.example.yourvideonotes.view.VideoActivity;
 
@@ -93,9 +94,16 @@ public class VideoInfoAdapter extends RecyclerView.Adapter<VideoInfoAdapter.View
 
                 // current edittext
                 dialogBinding.explanationDialogEdittext.setText(videoExplanation);
-                dialogBinding.secondDialogEdittext.setText(""+videoSecond);
                 dialogBinding.titleDialogEdittext.setText(videoTitle);
                 dialogBinding.linkDialogEdittext.setText(videoUrl);
+
+                // step control
+                String[] convertedSecond = Util.toHourMinSecondConvert(videoSecond);
+                dialogBinding.hourDialogEdittext.setText(convertedSecond[0]);
+                dialogBinding.minuteDialogEdittext.setText(convertedSecond[1]);
+                dialogBinding.secondDialogEdittext.setText(convertedSecond[2]);
+
+
 
                 dialogBinding.addImageButton.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -104,16 +112,32 @@ public class VideoInfoAdapter extends RecyclerView.Adapter<VideoInfoAdapter.View
                         String dialogLinkEdittextStr = dialogBinding.linkDialogEdittext.getText().toString();
                         String dialogExpEdittextStr = dialogBinding.explanationDialogEdittext.getText().toString();
                         String dialogTitleEdittextStr = dialogBinding.titleDialogEdittext.getText().toString();
-                        String dialogSecEdittextFloat = dialogBinding.secondDialogEdittext.getText().toString();
+
+                        // time
+                        String dialogHourEdittextStr = dialogBinding.hourDialogEdittext.getText().toString();
+                        String dialogMinEdittextStr = dialogBinding.minuteDialogEdittext.getText().toString();
+                        String dialogSecEdittextStr = dialogBinding.secondDialogEdittext.getText().toString();
 
 
-                        if (!dialogSecEdittextFloat.isEmpty() && !dialogLinkEdittextStr.isEmpty() && !dialogSecEdittextFloat.isEmpty() && !dialogTitleEdittextStr.isEmpty())
+                        if (Util.isEmptyStringParams(dialogLinkEdittextStr,dialogExpEdittextStr,dialogTitleEdittextStr,dialogHourEdittextStr,dialogMinEdittextStr,dialogSecEdittextStr))
                         {
-                            VideoInfo info = new VideoInfo(dialogTitleEdittextStr,dialogLinkEdittextStr,dialogExpEdittextStr,Float.parseFloat(dialogSecEdittextFloat),date);
-                            videoInfoDao.updateVideo(videoId,dialogLinkEdittextStr,dialogTitleEdittextStr,dialogExpEdittextStr,Float.parseFloat(dialogSecEdittextFloat));
-                            videoInfoArrayList.set(position,info);
-                            notifyDataSetChanged();
-                            dialog.dismiss();
+                            if (Util.videoStartTimeEditTextControl(dialogHourEdittextStr,dialogMinEdittextStr,dialogSecEdittextStr))
+                            {
+                                //convert for youtubeplayer
+                                float convertToSec= Util.toSecondConvert(Integer.parseInt(dialogHourEdittextStr),Integer.parseInt(dialogMinEdittextStr),Integer.parseInt(dialogSecEdittextStr),v.getContext());
+
+                                VideoInfo info = new VideoInfo(dialogTitleEdittextStr,dialogLinkEdittextStr,dialogExpEdittextStr,convertToSec,date);
+
+                                videoInfoDao.updateVideo(videoId,dialogLinkEdittextStr,dialogTitleEdittextStr,dialogExpEdittextStr,convertToSec);
+                                videoInfoArrayList.set(position,info);
+                                notifyDataSetChanged();
+
+                                dialog.dismiss();
+                            }
+                            else {
+                                Toast.makeText(v.getContext(), "Please enter valid time", Toast.LENGTH_SHORT).show();
+                            }
+
                         }
                         else
                         {

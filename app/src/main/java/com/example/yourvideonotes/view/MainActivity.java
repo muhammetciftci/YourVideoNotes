@@ -71,8 +71,7 @@ public class MainActivity extends AppCompatActivity {
 
     public List<VideoInfo> getDataList()
     {
-        VideoDatabase db = Room.databaseBuilder(getApplicationContext(),
-                VideoDatabase.class, "videoinfo").allowMainThreadQueries().build();
+        VideoDatabase db = Room.databaseBuilder(getApplicationContext(), VideoDatabase.class, "videoinfo").allowMainThreadQueries().build();
         VideoInfoDao videoInfoDao = db.videoInfoDao();
 
        return videoInfoDao.getAll();
@@ -86,8 +85,7 @@ public class MainActivity extends AppCompatActivity {
         dialog.setContentView(view);
 
 
-        VideoDatabase db = Room.databaseBuilder(getApplicationContext(),
-                VideoDatabase.class, "videoinfo").allowMainThreadQueries().build();
+        VideoDatabase db = Room.databaseBuilder(getApplicationContext(), VideoDatabase.class, "videoinfo").allowMainThreadQueries().build();
         VideoInfoDao videoInfoDao = db.videoInfoDao();
 
         dialogBinding.addImageButton.setOnClickListener(new View.OnClickListener() {
@@ -97,21 +95,25 @@ public class MainActivity extends AppCompatActivity {
                 String titleString = dialogBinding.titleDialogEdittext.getText().toString();
                 String videoexpString = dialogBinding.explanationDialogEdittext.getText().toString();
                 String linkStirng = dialogBinding.linkDialogEdittext.getText().toString();
+                String date = getDate(getApplicationContext());
+
                 String hour = dialogBinding.hourDialogEdittext.getText().toString();
                 String min = dialogBinding.minuteDialogEdittext.getText().toString();
                 String sec = dialogBinding.secondDialogEdittext.getText().toString();
-
-
-                String date = getDate(getApplicationContext());
                 float secondFloat = 0;
 
-                if (!titleString.isEmpty() && !videoexpString.isEmpty() && !linkStirng.isEmpty() && !hour.isEmpty() && !min.isEmpty() && !sec.isEmpty())
+                if (Util.isEmptyStringParams(titleString,videoexpString,linkStirng,hour,min,sec))
                 {
-                    secondFloat = Util.videoSecondMaker(Integer.parseInt(hour), Integer.parseInt(min), Integer.parseInt(sec), getApplicationContext());
-                    VideoInfo video = new VideoInfo(titleString, linkStirng, videoexpString,secondFloat,date);
-                    videoInfoDao.insertAll(video);
-                    dialog.dismiss();
-                    refreshRecylerView();
+                    if (Util.videoStartTimeEditTextControl(hour,min,sec)){
+                        secondFloat = Util.toSecondConvert(Integer.parseInt(hour), Integer.parseInt(min), Integer.parseInt(sec), getApplicationContext());
+                        VideoInfo video = new VideoInfo(titleString, linkStirng, videoexpString,secondFloat,date);
+                        videoInfoDao.insertAll(video);
+                        dialog.dismiss();
+                        refreshRecylerView();
+                    }
+                    else{
+                        Toast.makeText(getApplicationContext(), "Please enter valid time", Toast.LENGTH_SHORT).show();
+                    }
 
                 }
                 else

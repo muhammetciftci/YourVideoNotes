@@ -47,7 +47,7 @@ public class VideoActivity extends AppCompatActivity {
                 public void onReady(@NonNull YouTubePlayer youTubePlayer) {
 
                     // check youtube link // muhammet ciftci
-                    if(videoUrl.contains("=") && videoUrl.contains("youtu.be/"))
+                    if(videoUrl.contains("=") && videoUrl.contains("https://www.youtube.com/"))
                     {
                         //for desktop link
                         String[] sep = videoUrl.split("=");
