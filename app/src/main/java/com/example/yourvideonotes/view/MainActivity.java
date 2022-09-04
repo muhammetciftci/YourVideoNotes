@@ -45,6 +45,31 @@ public class MainActivity extends AppCompatActivity {
         setContentView(view);
 
 
+
+
+
+
+        refreshRecylerView();
+        swipeRefresh();
+
+
+
+        dialog = new Dialog(this);
+
+
+        binding.addButtonToolbar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+              addButtonFunction();
+
+            }
+        });
+
+    }
+
+
+    public void swipeRefresh(){
         binding.swiperefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -62,24 +87,6 @@ public class MainActivity extends AppCompatActivity {
                 }.start();
             }
         });
-
-
-
-        refreshRecylerView();
-
-
-        dialog = new Dialog(this);
-
-
-        binding.addButtonToolbar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-              addButtonFunction();
-
-            }
-        });
-
     }
 
 

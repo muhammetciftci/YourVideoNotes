@@ -60,14 +60,6 @@
         android:orientation="horizontal">
 
 
-        <ImageView
-            android:id="@+id/Stop_videoactivity_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:padding="5dp"
-            android:layout_margin="5dp"
-            android:src="@drawable/ic_baseline_smart_display_24" />
 
         <ImageView
             android:id="@+id/edit_videoactivity_button"
@@ -75,6 +67,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:padding="5dp"
+            android:onClick="editButtonVideoActivity"
             android:layout_margin="5dp"
             android:src="@drawable/ic_sharp_edit_24" />
 

@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:padding="30dp"
     android:layout_margin="10dp"
-    android:background="#44b1ff"
+    android:background="#03A9F4"
     android:layout_height="wrap_content">
 
     <LinearLayout
@@ -59,6 +59,7 @@
             android:layout_gravity="center"
             android:padding="5dp"
             android:layout_margin="5dp"
+            android:background="@drawable/green_desing"
             android:src="@drawable/ic_baseline_smart_display_24" />
 
         <ImageView
@@ -68,6 +69,7 @@
             android:layout_gravity="center"
             android:padding="5dp"
             android:layout_margin="5dp"
+            android:background="@drawable/red_desing"
             android:src="@drawable/ic_baseline_delete_24" />
 
         <ImageView
@@ -77,6 +79,7 @@
             android:layout_gravity="center"
             android:padding="5dp"
             android:layout_margin="5dp"
+            android:background="@drawable/blue_desing"
             android:src="@drawable/ic_sharp_edit_24" />
 
 

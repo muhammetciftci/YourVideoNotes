@@ -43,7 +43,6 @@ public class VideoActivity extends AppCompatActivity {
 
 
 
-
     }
 
     public void playVideo()
@@ -93,6 +92,9 @@ public class VideoActivity extends AppCompatActivity {
 
     }
 
+    public void editButtonVideoActivity(View view){
+        Util.dialogEdit(view.getContext(),info,videoId);
+    }
     public void getIntentInfo()
     {
         Bundle extras = getIntent().getExtras();
