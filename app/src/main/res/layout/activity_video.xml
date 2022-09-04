@@ -10,6 +10,16 @@
     android:gravity="center"
     tools:context=".view.VideoActivity">
 
+    <TextView
+        android:id="@+id/title_videoactivity_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:layout_marginBottom="25dp"
+        android:layout_gravity="center"
+        android:textStyle="bold"
+        android:text="Title" />
+
     <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
         android:id="@+id/youtubeplayerview"
         android:layout_width="match_parent"
@@ -19,23 +29,6 @@
 
     </com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView>
 
-    <TextView
-        android:id="@+id/title_videoactivity_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="20dp"
-        android:layout_marginTop="25dp"
-        android:textStyle="bold"
-        android:text="Title" />
-
-    <TextView
-        android:id="@+id/date_videoactivity_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
-        android:textStyle="bold"
-        android:textSize="18dp"
-        android:text="video date" />
 
     <TextView
         android:id="@+id/explanation_videoactivity_text"
@@ -43,8 +36,20 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="25dp"
         android:textStyle="italic"
-        android:textSize="18dp"
+        android:textSize="16dp"
         android:text="video explanation" />
+
+
+
+    <TextView
+        android:id="@+id/date_videoactivity_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:textStyle="bold"
+        android:textSize="12sp"
+        android:text="video date" />
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -79,6 +84,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:padding="5dp"
+            android:onClick="deleteVideoButton"
             android:layout_margin="5dp"
             android:src="@drawable/ic_baseline_delete_24" />
     </LinearLayout>

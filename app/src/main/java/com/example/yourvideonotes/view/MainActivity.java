@@ -3,13 +3,16 @@ package com.example.yourvideonotes.view;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.room.Room;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.yourvideonotes.R;
 import com.example.yourvideonotes.adapter.VideoInfoAdapter;
 import com.example.yourvideonotes.databinding.ActivityMainBinding;
 import com.example.yourvideonotes.databinding.AddDialogBinding;
@@ -22,6 +25,7 @@ import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -39,6 +43,25 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
+
+
+        binding.swiperefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+
+                new CountDownTimer(1000,1000){
+                    @Override
+                    public void onTick(long millisUntilFinished) {}
+
+                    @Override
+                    public void onFinish() {
+                        refreshRecylerView();
+                        binding.swiperefresh.setRefreshing(false);
+                    }
+
+                }.start();
+            }
+        });
 
 
 
@@ -61,6 +84,8 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
+
     public void refreshRecylerView()
     {
         videoInfoArrayList = getDataList();
@@ -73,7 +98,6 @@ public class MainActivity extends AppCompatActivity {
     {
         VideoDatabase db = Room.databaseBuilder(getApplicationContext(), VideoDatabase.class, "videoinfo").allowMainThreadQueries().build();
         VideoInfoDao videoInfoDao = db.videoInfoDao();
-
        return videoInfoDao.getAll();
 
     }

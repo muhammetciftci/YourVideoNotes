@@ -49,8 +49,7 @@ public class VideoInfoAdapter extends RecyclerView.Adapter<VideoInfoAdapter.View
 
         holder.binding.videoExplanationText.setText(videoExplanation);
         holder.binding.videoTitleText.setText(videoTitle);
-        holder.binding.videoDateText.setText(date);
-
+        holder.binding.videoDateText.setText("Saved date: "+date);
 
 
         holder.binding.playVideoButton.setOnClickListener(new View.OnClickListener() {
@@ -63,6 +62,7 @@ public class VideoInfoAdapter extends RecyclerView.Adapter<VideoInfoAdapter.View
                 intent.putExtra("exp",videoExplanation);
                 intent.putExtra("date",date);
                 intent.putExtra("sec",videoSecond);
+                intent.putExtra("id",videoId);
                 v.getContext().startActivity(intent);
 
             }
@@ -71,9 +71,8 @@ public class VideoInfoAdapter extends RecyclerView.Adapter<VideoInfoAdapter.View
         holder.binding.deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                VideoDatabase db = Room.databaseBuilder(v.getContext(), VideoDatabase.class, "videoinfo").allowMainThreadQueries().build();
-                VideoInfoDao videoInfoDao = db.videoInfoDao();
-                videoInfoDao.deleteVideo(videoId);
+
+                Util.deleteVideo(v.getContext(),videoId);
                 videoInfoArrayList.remove(position);
                 notifyDataSetChanged();
 
@@ -83,73 +82,16 @@ public class VideoInfoAdapter extends RecyclerView.Adapter<VideoInfoAdapter.View
         holder.binding.editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Dialog dialog = new Dialog(v.getContext());
-                LayoutInflater inflater = dialog.getLayoutInflater();
-                AddDialogBinding dialogBinding = AddDialogBinding.inflate(inflater);
-                View view = dialogBinding.getRoot();
-                dialog.setContentView(view);
 
-                VideoDatabase db = Room.databaseBuilder(v.getContext(), VideoDatabase.class, "videoinfo").allowMainThreadQueries().build();
-                VideoInfoDao videoInfoDao = db.videoInfoDao();
-
-                // current edittext
-                dialogBinding.explanationDialogEdittext.setText(videoExplanation);
-                dialogBinding.titleDialogEdittext.setText(videoTitle);
-                dialogBinding.linkDialogEdittext.setText(videoUrl);
-
-                // step control
-                String[] convertedSecond = Util.toHourMinSecondConvert(videoSecond);
-                dialogBinding.hourDialogEdittext.setText(convertedSecond[0]);
-                dialogBinding.minuteDialogEdittext.setText(convertedSecond[1]);
-                dialogBinding.secondDialogEdittext.setText(convertedSecond[2]);
+                VideoInfo info = new VideoInfo(videoInfoArrayList.get(position).videoTitle,
+                        videoInfoArrayList.get(position).videoLink,
+                        videoInfoArrayList.get(position).videoExplanation,
+                        videoInfoArrayList.get(position).videoSec,
+                        videoInfoArrayList.get(position).date);
 
 
-
-                dialogBinding.addImageButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        String dialogLinkEdittextStr = dialogBinding.linkDialogEdittext.getText().toString();
-                        String dialogExpEdittextStr = dialogBinding.explanationDialogEdittext.getText().toString();
-                        String dialogTitleEdittextStr = dialogBinding.titleDialogEdittext.getText().toString();
-
-                        // time
-                        String dialogHourEdittextStr = dialogBinding.hourDialogEdittext.getText().toString();
-                        String dialogMinEdittextStr = dialogBinding.minuteDialogEdittext.getText().toString();
-                        String dialogSecEdittextStr = dialogBinding.secondDialogEdittext.getText().toString();
-
-
-                        if (Util.isEmptyStringParams(dialogLinkEdittextStr,dialogExpEdittextStr,dialogTitleEdittextStr,dialogHourEdittextStr,dialogMinEdittextStr,dialogSecEdittextStr))
-                        {
-                            if (Util.videoStartTimeEditTextControl(dialogHourEdittextStr,dialogMinEdittextStr,dialogSecEdittextStr))
-                            {
-                                //convert for youtubeplayer
-                                float convertToSec= Util.toSecondConvert(Integer.parseInt(dialogHourEdittextStr),Integer.parseInt(dialogMinEdittextStr),Integer.parseInt(dialogSecEdittextStr),v.getContext());
-
-                                VideoInfo info = new VideoInfo(dialogTitleEdittextStr,dialogLinkEdittextStr,dialogExpEdittextStr,convertToSec,date);
-
-                                videoInfoDao.updateVideo(videoId,dialogLinkEdittextStr,dialogTitleEdittextStr,dialogExpEdittextStr,convertToSec);
-                                videoInfoArrayList.set(position,info);
-                                notifyDataSetChanged();
-
-                                dialog.dismiss();
-                            }
-                            else {
-                                Toast.makeText(v.getContext(), "Please enter valid time", Toast.LENGTH_SHORT).show();
-                            }
-
-                        }
-                        else
-                        {
-                            Toast.makeText(v.getContext(), "Please fill in the blanks", Toast.LENGTH_SHORT).show();
-                        }
-
-                    }
-                });
-                dialog.show();
-
-
-
+                Util.dialogEdit(v.getContext(),info,videoId);
+                notifyDataSetChanged();
 
 
             }
